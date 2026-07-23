@@ -7,4 +7,4 @@
 # Whitelist allowed files
 !README.md
 !.gitignore
-!frontend/index.html
+!index.html
