@@ -4,6 +4,26 @@ Giao diện Web & Flask Backend quản lý thiết bị và lọc MAC Router Hua
 
 ---
 
+## 📱 Progressive Web App (PWA)
+
+Ứng dụng này đã được chuyển đổi thành **Progressive Web App (PWA)** với đầy đủ tính năng:
+
+- ✅ **Cài đặt như app native** trên điện thoại/máy tính (có thể dùng ngoài trình duyệt)
+- ✅ **Service Worker** - cache thông minh, hỗ trợ offline một phần
+- ✅ **Web App Manifest** - giao diện fullscreen, theme màu, icon đầy đủ
+- ✅ **App Shortcuts** - truy cập nhanh Devices, Access Control, Settings
+- ✅ **Tự động cập nhật** khi có phiên bản mới
+
+### Cách cài đặt PWA
+
+1. **Trên Chrome/Edge (Desktop)**: Nhấn vào icon **Install** (cài đặt) trên thanh địa chỉ hoặc menu.
+2. **Trên Android**: Mở trang web bằng Chrome -> nhấn menu **Add to Home screen**.
+3. **Trên iOS (Safari)**: Nhấn **Share** icon -> chọn **Add to Home Screen**.
+
+> Khi đã cài đặt, app sẽ chạy với giao diện fullscreen không viền trình duyệt, giống như một app thật.
+
+---
+
 ## 🚀 Hướng Dẫn Chạy Nhanh
 
 ### 1. Khởi chạy Backend (Python)

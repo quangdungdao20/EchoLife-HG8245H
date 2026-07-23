@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huawei HG8245H Router Manager</title>
+    
+    <!-- PWA / Web App Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HG8245H">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="HG8245H Router">
+    
+    <!-- iOS icon links -->
+    <link rel="apple-touch-icon" sizes="72x72" href="pwa-icons/icon-72x72.svg">
+    <link rel="apple-touch-icon" sizes="96x96" href="pwa-icons/icon-96x96.svg">
+    <link rel="apple-touch-icon" sizes="128x128" href="pwa-icons/icon-128x128.svg">
+    <link rel="apple-touch-icon" sizes="192x192" href="pwa-icons/icon-192x192.svg">
+    <link rel="apple-touch-icon" sizes="512x512" href="pwa-icons/icon-512x512.svg">
+    
     <link rel="icon" type="image/png" href="https://img.icons8.com/3d-fluency/94/wifi-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2509,6 +2526,49 @@
             } catch (err) {
                 showToast("Lỗi kết nối tới API Server", "error");
             }
+        }
+    </script>
+
+    <!-- Register Service Worker for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then((reg) => {
+                        console.log('[PWA] Service Worker registered:', reg.scope);
+                        
+                        // Check for updates
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('[PWA] New version available!');
+                                    showToast('Phiên bản mới đã sẵn sàng. Hãy refresh trang!', 'success');
+                                }
+                            });
+                        });
+                    })
+                    .catch((err) => {
+                        console.error('[PWA] Service Worker registration failed:', err);
+                    });
+
+                // Handle PWA install prompt
+                let deferredPrompt = null;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    console.log('[PWA] Install prompt available');
+                });
+
+                // Track if app is running standalone
+                if (window.matchMedia('(display-mode: standalone)').matches || 
+                    window.navigator.standalone === true) {
+                    console.log('[PWA] Running in standalone mode');
+                    document.documentElement.classList.add('pwa-mode');
+                }
+            });
+        } else {
+            console.log('[PWA] Service Workers not supported');
         }
     </script>
 </body>

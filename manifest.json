@@ -1,0 +1,68 @@
+{
+  "name": "EchoLife HG8245H - Router Manager",
+  "short_name": "HG8245H",
+  "description": "Giao diện quản lý thiết bị & bộ lọc MAC Router Huawei HG8245H",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0e17",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "lang": "vi",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "pwa-icons/icon-72x72.svg",
+      "sizes": "72x72",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "pwa-icons/icon-96x96.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "pwa-icons/icon-128x128.svg",
+      "sizes": "128x128",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "pwa-icons/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "pwa-icons/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "splash_pages": null,
+  "categories": ["utilities", "networking", "productivity"],
+  "display_override": ["standalone", "minimal-ui"],
+  "edge_side_panel": {},
+  "shortcuts": [
+    {
+      "name": "Thiết bị kết nối",
+      "short_name": "Devices",
+      "description": "Xem danh sách thiết bị kết nối",
+      "url": "/index.html#devices"
+    },
+    {
+      "name": "Bộ lọc MAC",
+      "short_name": "Access",
+      "description": "Cấu hình bộ lọc truy cập MAC",
+      "url": "/index.html#access-control"
+    },
+    {
+      "name": "Cài đặt",
+      "short_name": "Settings",
+      "description": "Cấu hình kết nối Router",
+      "url": "/index.html#settings"
+    }
+  ]
+}
