@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Allow directory traversal
+!*/
+
+# Whitelist allowed files
+!README.md
+!.gitignore
+!frontend/index.html
