@@ -1,6 +1,6 @@
 {
-  "name": "EchoLife HG8245H - Router Manager",
-  "short_name": "HG8245H",
+  "name": "HomeNet Admin",
+  "short_name": "HomeNet",
   "description": "Giao diện quản lý thiết bị & bộ lọc MAC Router Huawei HG8245H",
   "start_url": "/index.html",
   "display": "standalone",
