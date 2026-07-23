@@ -1094,6 +1094,103 @@
                 gap: 16px;
             }
         }
+
+        /* Auth Styles */
+        .auth-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.4s ease-out;
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .auth-logo img {
+            margin-bottom: 12px;
+        }
+        .auth-logo h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 0 0 6px 0;
+            letter-spacing: -0.5px;
+        }
+        .auth-logo p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .auth-toggle a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .auth-toggle a:hover {
+            color: var(--primary-hover);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: var(--text-color);
+        }
+        .user-badge span {
+            font-weight: 500;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .btn-logout {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+            margin-left: 4px;
+        }
+        .btn-logout:hover {
+            color: var(--danger-color);
+            background: rgba(244, 63, 94, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -1110,10 +1207,21 @@
                 </div>
             </div>
 
-            <!-- Connection Status -->
-            <div id="conn-status" class="status-badge disconnected">
-                <span class="status-dot"></span>
-                <span id="conn-status-text">Đang kiểm tra kết nối...</span>
+            <div class="header-right-group">
+                <!-- User Profile info -->
+                <div class="user-badge" id="user-profile-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span id="header-username">admin</span>
+                    <button class="btn-logout" onclick="handleLogout()" title="Đăng xuất">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Connection Status -->
+                <div id="conn-status" class="status-badge disconnected">
+                    <span class="status-dot"></span>
+                    <span id="conn-status-text">Đang kiểm tra kết nối...</span>
+                </div>
             </div>
         </header>
 
@@ -1130,6 +1238,10 @@
             <button class="tab-btn" onclick="switchTab('settings')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 Settings
+            </button>
+            <button class="tab-btn" onclick="switchTab('users')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Users
             </button>
         </div>
 
@@ -1382,6 +1494,37 @@
             </div>
         </div>
 
+        <!-- 4. USERS TAB -->
+        <div id="users" class="tab-content">
+            <div class="glass-panel" style="padding: 24px;">
+                <h3 style="font-size: 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Quản Lý Người Dùng
+                </h3>
+
+                <div id="users-loader" class="page-loader">
+                    <span class="spinner"></span>
+                    <p>Đang tải danh sách người dùng...</p>
+                </div>
+
+                <div class="table-responsive" id="users-table-container" style="display: none;">
+                    <table class="device-table">
+                        <thead>
+                            <tr>
+                                <th>Tài Khoản</th>
+                                <th>Trạng Thái</th>
+                                <th>Người Kích Hoạt</th>
+                                <th>Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-list">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- MODAL: ADD MAC FILTER MANUAL -->
         <div id="add-rule-modal" class="modal-overlay">
             <div class="modal-container glass-panel">
@@ -1439,6 +1582,49 @@
         </div>
     </div>
 
+    <!-- AUTH CONTAINER (Hidden by default) -->
+    <div id="auth-container" class="auth-wrapper" style="display: none;">
+        <div class="auth-card glass-panel">
+            <div class="auth-logo">
+                <img width="64" height="64" src="https://img.icons8.com/3d-fluency/94/wifi-logo.png" alt="wifi-logo"/>
+                <h2>EchoLife HG8245H</h2>
+                <p id="auth-subtitle">Đăng nhập để quản lý thiết bị & bộ lọc MAC</p>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label" for="login-username">Tài Khoản</label>
+                    <input type="text" id="login-username" class="form-input" placeholder="Nhập tài khoản" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label class="form-label" for="login-password">Mật Khẩu</label>
+                    <input type="password" id="login-password" class="form-input" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Đăng Nhập</button>
+                <div class="auth-toggle">
+                    Chưa có tài khoản? <a href="#" onclick="toggleAuthMode('register')">Đăng ký ngay</a>
+                </div>
+            </form>
+            
+            <!-- Register Form (Hidden by default) -->
+            <form id="register-form" onsubmit="handleRegisterSubmit(event)" style="display: none;">
+                <div class="form-group" style="margin-bottom: 16px;">
+                    <label class="form-label" for="register-username">Tài Khoản</label>
+                    <input type="text" id="register-username" class="form-input" placeholder="Tạo tài khoản" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 24px;">
+                    <label class="form-label" for="register-password">Mật Khẩu</label>
+                    <input type="password" id="register-password" class="form-input" placeholder="Tạo mật khẩu (tối thiểu 6 ký tự)" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Đăng Ký</button>
+                <div class="auth-toggle">
+                    Đã có tài khoản? <a href="#" onclick="toggleAuthMode('login')">Đăng nhập</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Store app state
         let devices = [];
@@ -1449,6 +1635,10 @@
         let apiServerUrl = localStorage.getItem("apiServerUrl") || "https://calm-brown-appreciated-coal.trycloudflare.com";
         let authMode = "credentials";
 
+        // Authentication state
+        let token = localStorage.getItem("authToken") || "";
+        let currentUsername = localStorage.getItem("authUsername") || "";
+
         // Initialize App
         window.addEventListener("DOMContentLoaded", () => {
             // Apply loaded setting to form
@@ -1457,17 +1647,23 @@
             // Set API host
             updateBackendUrl();
             
-            // Get router configuration details
-            fetchSettings();
-            
-            // Load dashboard
-            checkSystemStatus();
-            fetchDevices();
-            fetchMacFilterRules();
+            if (!token) {
+                showAuthScreen(true);
+            } else {
+                showAuthScreen(false);
+                
+                // Get router configuration details
+                fetchSettings();
+                
+                // Load dashboard
+                checkSystemStatus();
+                fetchDevices();
+                fetchMacFilterRules();
+            }
 
             // Setup periodic refresh (every 30 seconds)
             setInterval(() => {
-                if (activeTab === "devices") {
+                if (token && activeTab === "devices") {
                     fetchDevices();
                 }
             }, 30000);
@@ -1534,10 +1730,212 @@
             if (tabId === "devices") buttons[0].classList.add("active");
             else if (tabId === "access-control") buttons[1].classList.add("active");
             else if (tabId === "settings") buttons[2].classList.add("active");
+            else if (tabId === "users") buttons[3].classList.add("active");
             
             // Refresh on switch
             if (tabId === "devices") fetchDevices();
             else if (tabId === "access-control") fetchMacFilterRules();
+            else if (tabId === "users") fetchUsers();
+        }
+
+        // Custom fetch wrapper supporting Authorization token
+        async function fetchWithAuth(endpoint, options = {}) {
+            if (!options.headers) {
+                options.headers = {};
+            }
+            if (token) {
+                options.headers["Authorization"] = `Bearer ${token}`;
+            }
+            
+            const url = getApiUrl(endpoint);
+            const response = await fetch(url, options);
+            
+            if (response.status === 401) {
+                handleUnauthorized();
+                throw new Error("Unauthorized");
+            }
+            
+            return response;
+        }
+
+        function handleUnauthorized() {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("authUsername");
+            token = "";
+            currentUsername = "";
+            showAuthScreen(true);
+        }
+
+        function showAuthScreen(show) {
+            const authContainer = document.getElementById("auth-container");
+            const mainContainer = document.querySelector(".container");
+            
+            if (show) {
+                authContainer.style.display = "flex";
+                mainContainer.style.display = "none";
+            } else {
+                authContainer.style.display = "none";
+                mainContainer.style.display = "block";
+                document.getElementById("header-username").textContent = currentUsername;
+            }
+        }
+
+        function toggleAuthMode(mode) {
+            const loginForm = document.getElementById("login-form");
+            const registerForm = document.getElementById("register-form");
+            const subtitle = document.getElementById("auth-subtitle");
+            
+            if (mode === "login") {
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+                subtitle.textContent = "Đăng nhập để quản lý thiết bị & bộ lọc MAC";
+            } else {
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+                subtitle.textContent = "Đăng ký tài khoản truy cập hệ thống";
+            }
+        }
+
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("login-username").value.trim();
+            const passwordInput = document.getElementById("login-password").value;
+            
+            try {
+                const response = await fetch(getApiUrl("auth/login"), {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username: usernameInput, password: passwordInput })
+                });
+                
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    token = data.token;
+                    currentUsername = data.username;
+                    localStorage.setItem("authToken", token);
+                    localStorage.setItem("authUsername", currentUsername);
+                    
+                    showToast(data.message, "success");
+                    showAuthScreen(false);
+                    
+                    fetchSettings();
+                    checkSystemStatus();
+                    fetchDevices();
+                    fetchMacFilterRules();
+                } else {
+                    showToast(data.error || "Đăng nhập thất bại!", "error");
+                }
+            } catch (err) {
+                showToast("Lỗi kết nối tới API Server", "error");
+            }
+        }
+
+        async function handleRegisterSubmit(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("register-username").value.trim();
+            const passwordInput = document.getElementById("register-password").value;
+            
+            try {
+                const response = await fetch(getApiUrl("auth/register"), {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username: usernameInput, password: passwordInput })
+                });
+                
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    showToast(data.message, "success");
+                    toggleAuthMode("login");
+                    document.getElementById("login-username").value = usernameInput;
+                    document.getElementById("login-password").value = "";
+                } else {
+                    showToast(data.error || "Đăng ký thất bại!", "error");
+                }
+            } catch (err) {
+                showToast("Lỗi kết nối tới API Server", "error");
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await fetch(getApiUrl("auth/logout"), {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+            } catch (err) {
+                console.error("Logout failed", err);
+            }
+            handleUnauthorized();
+        }
+
+        async function fetchUsers() {
+            const loader = document.getElementById("users-loader");
+            const container = document.getElementById("users-table-container");
+            loader.style.display = "flex";
+            container.style.display = "none";
+            
+            try {
+                const response = await fetchWithAuth("users");
+                const usersList = await response.json();
+                
+                const tbody = document.getElementById("users-list");
+                tbody.innerHTML = "";
+                
+                usersList.forEach(user => {
+                    const tr = document.createElement("tr");
+                    const isUserActive = user.is_active === 1;
+                    const statusClass = isUserActive ? "online" : "offline";
+                    const statusLabel = isUserActive ? "Đã kích hoạt" : "Chưa kích hoạt";
+                    
+                    let actionBtn = "";
+                    if (!isUserActive) {
+                        actionBtn = `<button class="btn btn-sm btn-primary" onclick="handleActivateUser('${user.username}')">Kích Hoạt</button>`;
+                    } else {
+                        actionBtn = `<span style="color: var(--text-muted); font-size: 13px;">Không cần thao tác</span>`;
+                    }
+                    
+                    tr.innerHTML = `
+                        <td data-label="Tài Khoản" style="font-weight: 600;">${user.username}</td>
+                        <td data-label="Trạng Thái">
+                            <span class="status-pill ${statusClass}">
+                                <span class="status-dot" style="background-color: currentColor; box-shadow: none; animation: none; width: 6px; height: 6px;"></span>
+                                ${statusLabel}
+                            </span>
+                        </td>
+                        <td data-label="Người Kích Hoạt" style="color: var(--text-muted);">${user.activated_by || '--'}</td>
+                        <td data-label="Hành Động">${actionBtn}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                loader.style.display = "none";
+                container.style.display = "block";
+            } catch (err) {
+                loader.style.display = "none";
+                container.style.display = "block";
+                showToast("Lỗi tải danh sách người dùng", "error");
+            }
+        }
+
+        async function handleActivateUser(username) {
+            if (!confirm(`Bạn có chắc chắn muốn kích hoạt tài khoản "${username}"?`)) return;
+            
+            try {
+                const response = await fetchWithAuth("users/activate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    showToast(data.message, "success");
+                    fetchUsers();
+                } else {
+                    showToast(data.error || "Lỗi kích hoạt người dùng", "error");
+                }
+            } catch (err) {
+                showToast("Lỗi kết nối", "error");
+            }
         }
 
         // Check Router system connection status
@@ -1546,7 +1944,7 @@
             const text = document.getElementById("conn-status-text");
             
             try {
-                const response = await fetch(getApiUrl("status"));
+                const response = await fetchWithAuth("status");
                 const data = await response.json();
                 
                 if (data.status === "connected") {
@@ -1565,7 +1963,7 @@
         // Get Settings
         async function fetchSettings() {
             try {
-                const response = await fetch(getApiUrl("settings"));
+                const response = await fetchWithAuth("settings");
                 if (!response.ok) return;
                 const data = await response.json();
                 
@@ -1599,7 +1997,7 @@
             };
             
             try {
-                const response = await fetch(getApiUrl("settings"), {
+                const response = await fetchWithAuth("settings", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
@@ -1657,7 +2055,7 @@
             container.style.display = "none";
             
             try {
-                const response = await fetch(getApiUrl("devices"));
+                const response = await fetchWithAuth("devices");
                 if (!response.ok) throw new Error("Lỗi API");
                 devices = await response.json();
                 
@@ -1800,7 +2198,7 @@
             container.style.display = "none";
             
             try {
-                const response = await fetch(getApiUrl("macfilter"));
+                const response = await fetchWithAuth("macfilter");
                 if (!response.ok) throw new Error("Lỗi tải bộ lọc");
                 macFilter = await response.json();
                 
@@ -1878,7 +2276,7 @@
             showToast(`Đang gửi yêu cầu ${enable ? 'bật' : 'tắt'} bộ lọc MAC...`, "success");
             
             try {
-                const response = await fetch(getApiUrl("macfilter/toggle"), {
+                const response = await fetchWithAuth("macfilter/toggle", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ enable, token: macFilter.token })
@@ -1909,7 +2307,7 @@
             showToast("Đang gửi yêu cầu đổi chế độ lọc...", "success");
             
             try {
-                const response = await fetch(getApiUrl("macfilter/mode"), {
+                const response = await fetchWithAuth("macfilter/mode", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ mode, token: macFilter.token })
@@ -1932,7 +2330,7 @@
             showToast(`Đang thêm ${mac.toUpperCase()} vào danh sách lọc...`, "success");
             
             try {
-                const response = await fetch(getApiUrl("macfilter/add"), {
+                const response = await fetchWithAuth("macfilter/add", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ mac, token: macFilter.token })
@@ -1968,7 +2366,7 @@
             showToast("Đang xoá quy tắc lọc...", "success");
             
             try {
-                const response = await fetch(getApiUrl("macfilter/delete"), {
+                const response = await fetchWithAuth("macfilter/delete", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ domain, token: macFilter.token })
@@ -2071,7 +2469,7 @@
             showToast("Đang lưu biệt danh...", "success");
             
             try {
-                const response = await fetch(getApiUrl("devices/nickname"), {
+                const response = await fetchWithAuth("devices/nickname", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ mac, nickname, description })
@@ -2097,7 +2495,7 @@
             showToast("Đang xoá biệt danh...", "success");
             
             try {
-                const response = await fetch(getApiUrl(`devices/nickname/${mac}`), {
+                const response = await fetchWithAuth(`devices/nickname/${mac}`, {
                     method: "DELETE"
                 });
                 

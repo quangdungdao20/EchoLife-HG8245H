@@ -9,12 +9,6 @@ Giao diện Web & Flask Backend quản lý thiết bị và lọc MAC Router Hua
 ### 1. Khởi chạy Backend (Python)
 ```bash
 cd backend
-python -m venv venv
-
-# Kích hoạt venv (Windows)
-.\venv\Scripts\activate
-# Kích hoạt venv (Linux/macOS)
-source venv/bin/activate
 
 # Cài đặt thư viện & chạy
 pip install flask flask-cors requests
